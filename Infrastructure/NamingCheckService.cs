@@ -1,5 +1,4 @@
-using Infrastructure;
-using Microsoft.EntityFrameworkCore;using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 namespace Infrastructure;
 
@@ -18,10 +17,11 @@ public class NamingCheckService : BackgroundService
            await using var scope = _serviceScopeFactory.CreateAsyncScope();
            var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
            var products = context.Products.ToList();
-           //  productList.GroupBy(p => p.Name).Where(r => r.Count() > 1);
-           foreach (var item in products )
+           var query = products.GroupBy(p => p.Id).Where(r => r.Count() > 1);
+           foreach (var item in query )
            {
-               Console.WriteLine($"Respponse from Background Service - {item.Name}");
+               
+               Console.WriteLine($"Respponse from Background Service - {item.Key}");
            }
            
             await Task.Delay(10000);
