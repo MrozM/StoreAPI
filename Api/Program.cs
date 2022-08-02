@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddDbContext<StoreContext>();
+builder.Services.AddHostedService<NamingCheckService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
