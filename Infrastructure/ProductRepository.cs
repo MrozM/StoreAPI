@@ -1,4 +1,5 @@
 using Core;
+using Infrastructure.Models;
 
 namespace Infrastructure;
 
@@ -10,27 +11,43 @@ public class ProductRepository : IProductRepository
     {
         _context = storeContext;
     }
-
-
-    public IEnumerable<Product> GetAll()
+    
+    public IEnumerable<ProductDto> GetAll()
     {
         var products = _context.Products.ToList();
 
-        return products;
+        var productDto = products.Select(r => new ProductDto()
+        {
+            Name = r.Name,
+            Description = r.Description,
+            Quantity = r.Quantity,
+            Price = r.Price
+        });
+
+        return productDto;
     }
-    public void Add(Product product)
+    public void Add(CreateProductDto dto)
     {
+        var product = new Product()
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            Quantity = dto.Quantity,
+            Price = dto.Price,
+        };
         _context.Products.Add(product);
         _context.SaveChanges();
     }
 
-    public bool Update(int id, string name)
+    public bool Update(int id, UpdateProductDto dto)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
 
         if (product is null) return false;
         
-        product.Name = name; 
+        product.Description = dto.Description;
+        product.Quantity = dto.Quantity;
+        product.Price = dto.Price;
         _context.SaveChanges();
         return true;
     }
@@ -47,7 +64,7 @@ public class ProductRepository : IProductRepository
         return true;
     }
 
-    public Product GetById(int id)
+    public Product? GetById(int id)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
 

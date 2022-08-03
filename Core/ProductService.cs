@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Hosting;
+using Infrastructure.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Core;
@@ -7,34 +7,33 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly ILogger<ProductService> _logger;
-    private Timer? _timer = null;
 
     public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
         _logger = logger;
     }
-
-    public Product GetById(int id)
+    
+    public Product? GetById(int id)
     {
         var product = _productRepository.GetById(id);
         return product;
     }
-
-    public IEnumerable<Product> GetAll()
+    
+    public IEnumerable<ProductDto> GetAll()
     {
         var products = _productRepository.GetAll();
         return products;
     }
-
-    public void Add(Product product)
+    
+    public void Add(CreateProductDto createProductDto)
     {
-        _productRepository.Add(product);
+        _productRepository.Add(createProductDto);
     }
 
-    public bool Update(int id, string name)
+    public bool Update(int id, UpdateProductDto dto)
     {
-        var product = _productRepository.Update(id, name);
+        var product = _productRepository.Update(id, dto);
 
         return product;
     }

@@ -1,4 +1,5 @@
 using Core;
+using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Store;
@@ -12,9 +13,9 @@ public class ProductController : Controller
     {
         _productService = productService;
     }
-
+    
     [HttpGet]
-    public ActionResult<IEnumerable<Product>> GetAll()
+    public ActionResult<IEnumerable<ProductDto>> GetAll()
     {
         var products = _productService.GetAll();
 
@@ -32,21 +33,21 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public ActionResult<Product> Add(Product? product)
+    public ActionResult<CreateProductDto> Add(CreateProductDto dto)
     {
-        if (product == null)
+        if (dto == null)
         {
             return BadRequest();
         }
-        _productService.Add(product);
+        _productService.Add(dto);
         
-        return Ok(product.Name);
+        return Ok(dto.Name);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Product> Update([FromRoute]int id, [FromBody]string name)
+    public ActionResult<Product> Update([FromRoute]int id, [FromBody]UpdateProductDto dto)
     {
-       var updatedProduct = _productService.Update(id, name);
+       var updatedProduct = _productService.Update(id, dto);
        if (!updatedProduct) return NotFound();
         
        return Ok();

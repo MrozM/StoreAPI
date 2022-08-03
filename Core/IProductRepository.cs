@@ -1,10 +1,12 @@
+using Infrastructure.Models;
+
 namespace Core;
 
 public interface IProductRepository
 {
-    IEnumerable<Product> GetAll();
-    Product GetById(int id);
-    void Add(Product product);
-    bool Update(int id, string name);
+    IEnumerable<ProductDto> GetAll();
+    Product? GetById(int id);
+    void Add(CreateProductDto dto);
+    bool Update(int id, UpdateProductDto dto);
     bool Delete(int id);
 }

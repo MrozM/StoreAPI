@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
+namespace Infrastructure.Models;
 
-namespace Core;
-
-public class Product
+public class CreateProductDto
 {
-    public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public int Quantity { get; set; }

@@ -17,14 +17,14 @@ public class NamingCheckService : BackgroundService
            await using var scope = _serviceScopeFactory.CreateAsyncScope();
            var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
            var products = context.Products.ToList();
-           var query = products.GroupBy(p => p.Id).Where(r => r.Count() > 1);
-           foreach (var item in query )
+           var distinctProducts = products.GroupBy(p => p.Name).Where(i => i.Count() > 1).Select(i => i.Key);
+           foreach (var product in distinctProducts )
            {
                
-               Console.WriteLine($"Respponse from Background Service - {item.Key}");
+               Console.WriteLine($"Response from Background Service - {product}");
            }
            
-            await Task.Delay(10000);
+           await Task.Delay(1000);
         }
     }
 }
