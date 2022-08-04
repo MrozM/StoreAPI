@@ -11,6 +11,12 @@ public class ProductRepository : IProductRepository
     {
         _context = storeContext;
     }
+
+
+    public bool CheckIfExist(int id)
+    {
+        return _context.Products.Any(p => p.Id == id);
+    }
     
     public IEnumerable<ProductDto> GetAll()
     {
@@ -39,17 +45,11 @@ public class ProductRepository : IProductRepository
         _context.SaveChanges();
     }
 
-    public bool Update(int id, UpdateProductDto dto)
+    public bool Update(Product product)
     {
-        var product = _context.Products.FirstOrDefault(p => p.Id == id);
-
-        if (product is null) return false;
-        
-        product.Description = dto.Description;
-        product.Quantity = dto.Quantity;
-        product.Price = dto.Price;
+        _context.Products.Update(product);
         _context.SaveChanges();
-        return true;
+        return true; //zmienić na void
     }
 
     public bool Delete(int id)

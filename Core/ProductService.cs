@@ -33,9 +33,12 @@ public class ProductService : IProductService
 
     public bool Update(int id, UpdateProductDto dto)
     {
-        var product = _productRepository.Update(id, dto);
+        var product = _productRepository.GetById(id);
 
-        return product;
+        if (product is null) return false;
+        product.UpdateFromDto(dto);
+        _productRepository.Update(product);
+        return true; //zmienić na void
     }
 
     public bool Delete(int id)

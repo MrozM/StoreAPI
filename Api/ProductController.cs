@@ -8,6 +8,8 @@ namespace Store;
 [ApiController]
 public class ProductController : Controller
 {
+    
+    //TODO wdrozyc automappera, zmienic baze na mssql z dockerem, stworzyc koszyk (po stworzeniu bazy)
     private readonly IProductService _productService;
     public ProductController(IProductService productService)
     {
