@@ -1,47 +1,44 @@
 using Infrastructure.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Core;
 
 public class ProductService : IProductService 
 {
     private readonly IProductRepository _productRepository;
-    private readonly ILogger<ProductService> _logger;
 
-    public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
+
+    public ProductService(IProductRepository productRepository)
     {
         _productRepository = productRepository;
-        _logger = logger;
     }
     
-    public Product? GetById(int id)
+    public Product? GetById(long id)
     {
         var product = _productRepository.GetById(id);
         return product;
     }
     
-    public IEnumerable<ProductDto> GetAll()
+    public IEnumerable<Product> GetAll()
     {
         var products = _productRepository.GetAll();
+
         return products;
     }
     
-    public void Add(CreateProductDto createProductDto)
+    public void Add(Product product)
     {
-        _productRepository.Add(createProductDto);
+        _productRepository.Add(product);
     }
 
-    public bool Update(int id, UpdateProductDto dto)
+    public void Update(long id, UpdateProductDto dto)
     {
         var product = _productRepository.GetById(id);
-
-        if (product is null) return false;
         product.UpdateFromDto(dto);
+
         _productRepository.Update(product);
-        return true; //zmienić na void
     }
 
-    public bool Delete(int id)
+    public bool Delete(long id)
     {
         var product = _productRepository.Delete(id);
 

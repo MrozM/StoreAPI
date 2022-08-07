@@ -4,9 +4,9 @@ namespace Core;
 
 public interface IProductService
 {
-    Product? GetById(int id);
-    IEnumerable<ProductDto> GetAll();
-    void Add(CreateProductDto dto);
-    bool Update(int id, UpdateProductDto dto);
-    bool Delete(int id);
+    Product? GetById(long id);
+    IEnumerable<Product> GetAll();
+    void Add(Product product);
+    void Update(long id, UpdateProductDto product);
+    bool Delete(long id);
 }

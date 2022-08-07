@@ -1,3 +1,4 @@
+using AutoMapper;
 using Core;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,27 +12,31 @@ public class ProductController : Controller
     
     //TODO wdrozyc automappera, zmienic baze na mssql z dockerem, stworzyc koszyk (po stworzeniu bazy)
     private readonly IProductService _productService;
-    public ProductController(IProductService productService)
+    private readonly IMapper _mapper;
+    public ProductController(IProductService productService, IMapper mapper)
     {
         _productService = productService;
+        _mapper = mapper;
     }
     
     [HttpGet]
     public ActionResult<IEnumerable<ProductDto>> GetAll()
     {
         var products = _productService.GetAll();
-
-        return Ok(products);
+        var productsDtos = _mapper.Map<List<ProductDto>>(products);
+        return Ok(productsDtos);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Product> GetById(int id)
+    public ActionResult<ProductDto> GetById(long id)
     {
         var product = _productService.GetById(id);
 
         if (product is null) return NotFound();
 
-        return Ok(product);
+       var productDto = _mapper.Map<ProductDto>(product);
+
+        return Ok(productDto);
     }
 
     [HttpPost]
@@ -41,18 +46,20 @@ public class ProductController : Controller
         {
             return BadRequest();
         }
-        _productService.Add(dto);
+
+        var product = _mapper.Map<Product>(dto);
+        _productService.Add(product);
         
         return Ok(dto.Name);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Product> Update([FromRoute]int id, [FromBody]UpdateProductDto dto)
-    {
-       var updatedProduct = _productService.Update(id, dto);
-       if (!updatedProduct) return NotFound();
+    public ActionResult<Product> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
+    { 
         
-       return Ok();
+        _productService.Update(id, dto);
+
+        return NoContent();
     }
 
     [HttpDelete("{id}")]

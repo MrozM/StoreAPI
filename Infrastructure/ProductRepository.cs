@@ -1,5 +1,4 @@
 using Core;
-using Infrastructure.Models;
 
 namespace Infrastructure;
 
@@ -13,46 +12,37 @@ public class ProductRepository : IProductRepository
     }
 
 
-    public bool CheckIfExist(int id)
+    public bool CheckIfExist(long id)
     {
         return _context.Products.Any(p => p.Id == id);
     }
     
-    public IEnumerable<ProductDto> GetAll()
+    public Product? GetById(long id)
+    {
+        var product = _context.Products.FirstOrDefault(p => p.Id == id);
+
+        return product;
+    }
+    
+    public IEnumerable<Product> GetAll()
     {
         var products = _context.Products.ToList();
-
-        var productDto = products.Select(r => new ProductDto()
-        {
-            Name = r.Name,
-            Description = r.Description,
-            Quantity = r.Quantity,
-            Price = r.Price
-        });
-
-        return productDto;
+        
+        return products;
     }
-    public void Add(CreateProductDto dto)
+    public void Add(Product product)
     {
-        var product = new Product()
-        {
-            Name = dto.Name,
-            Description = dto.Description,
-            Quantity = dto.Quantity,
-            Price = dto.Price,
-        };
         _context.Products.Add(product);
         _context.SaveChanges();
     }
 
-    public bool Update(Product product)
+    public void Update(Product product)
     {
         _context.Products.Update(product);
         _context.SaveChanges();
-        return true; //zmienić na void
     }
 
-    public bool Delete(int id)
+    public bool Delete(long id)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
         
@@ -64,10 +54,5 @@ public class ProductRepository : IProductRepository
         return true;
     }
 
-    public Product? GetById(int id)
-    {
-        var product = _context.Products.FirstOrDefault(p => p.Id == id);
-
-        return product;
-    }
+   
 }
