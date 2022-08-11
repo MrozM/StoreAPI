@@ -5,9 +5,14 @@ namespace Infrastructure;
 
 public class StoreContext : DbContext
 {
-    public DbSet<Product> Products { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public StoreContext(DbContextOptions<StoreContext> options) : base(options) { }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("test");
+        modelBuilder.Entity<Product>();
+        modelBuilder.Entity<Order>();
     }
-}   
+
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Order> Orders { get; set; }
+
+}

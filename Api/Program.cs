@@ -1,5 +1,6 @@
 using Core;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
-builder.Services.AddDbContext<StoreContext>();
+builder.Services.AddDbContext<StoreContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("StoreAPI")));
 builder.Services.AddHostedService<NamingCheckService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
