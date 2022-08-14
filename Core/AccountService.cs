@@ -1,5 +1,5 @@
 using Core.Models;
-
+ 
 namespace Core;
 
 public class AccountService : IAccountService
@@ -11,8 +11,8 @@ public class AccountService : IAccountService
         _accountRepository = accountRepository;
     }
     
-    public void RegisterUser(User user)
+    public void RegisterUser(User user, string password)
     {
-     _accountRepository.RegisterUser(user);
+     _accountRepository.RegisterUser(user, password);
     }
 }

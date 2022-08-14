@@ -4,5 +4,5 @@ namespace Core;
 
 public interface IAccountService
 { 
-    void RegisterUser(User user);
+    void RegisterUser(User user, string password);
 }

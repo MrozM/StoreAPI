@@ -21,7 +21,7 @@ public class AccountController : Controller
     public ActionResult RegisterUser([FromBody]RegisterUserDto dto)
     {
         var user = _mapper.Map<User>(dto);
-        _accountService.RegisterUser(user);
+        _accountService.RegisterUser(user, dto.Password);
         return Ok();
     }
 }

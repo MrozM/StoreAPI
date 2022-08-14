@@ -5,5 +5,5 @@ namespace Core;
 
 public interface IAccountRepository
 {
-    void RegisterUser(User user);
+    void RegisterUser(User user, string password);
 }
