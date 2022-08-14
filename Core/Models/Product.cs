@@ -1,6 +1,6 @@
 using Infrastructure.Models;
 
-namespace Core;
+namespace Core.Models;
 
 public class Product
 {

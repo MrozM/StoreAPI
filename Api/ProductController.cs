@@ -1,5 +1,6 @@
 using AutoMapper;
 using Core;
+using Core.Models;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 

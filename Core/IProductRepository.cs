@@ -1,3 +1,5 @@
+using Core.Models;
+
 namespace Core;
 
 public interface IProductRepository

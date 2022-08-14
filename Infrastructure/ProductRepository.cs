@@ -1,4 +1,5 @@
 using Core;
+using Core.Models;
 
 namespace Infrastructure;
 
