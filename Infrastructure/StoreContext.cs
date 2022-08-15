@@ -10,15 +10,19 @@ public class StoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>()
-            .Property(p => p.Name)
-            .IsRequired();
+            .Property(p => p.Name).IsRequired();
+        
         modelBuilder.Entity<Order>();
+        
         modelBuilder.Entity<User>()
-            .Property(u => u.Username)
-            .IsRequired();
+            .Property(user => user.Username).IsRequired();
+        modelBuilder.Entity<User>()
+            .Property(user => user.Email).IsRequired();
+        modelBuilder.Entity<User>()
+            .HasIndex(user => user.Email).IsUnique();
+
         modelBuilder.Entity<Role>()
-            .Property(r => r.Name)
-            .IsRequired();
+            .Property(r => r.Name).IsRequired();
     }
 
     public DbSet<Product> Products { get; set; }
