@@ -2,6 +2,7 @@ using AutoMapper;
 using Core;
 using Core.Models;
 using Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Store;
@@ -11,7 +12,6 @@ namespace Store;
 public class ProductController : Controller
 {
     
-    //TODO wdrozyc automappera, zmienic baze na mssql z dockerem, stworzyc koszyk (po stworzeniu bazy)
     private readonly IProductService _productService;
     private readonly IMapper _mapper;
     public ProductController(IProductService productService, IMapper mapper)
@@ -41,6 +41,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
+    [Authorize]
     public ActionResult<CreateProductDto> Add(CreateProductDto dto)
     {
         if (dto == null)
@@ -55,6 +56,7 @@ public class ProductController : Controller
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public ActionResult<Product> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
     { 
         
@@ -64,6 +66,7 @@ public class ProductController : Controller
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult Delete([FromRoute]int id)
     {
         var isDeleted = _productService.Delete(id);
