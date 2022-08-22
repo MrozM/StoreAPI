@@ -21,7 +21,21 @@ public class AccountService : IAccountService
         _passwordHasher = passwordHasher;
         _authenticationSettings = authenticationSettings;
     }
-    
+
+    public User? CheckIfAccountExist(LoginDto dto)
+    {
+        var user = _accountRepository.CheckIfAccountExist(dto);
+
+        return user;
+    }
+
+    public User? CheckIfMailExist(string mail)
+    {
+        var user = _accountRepository.CheckIfMailExist(mail);
+
+        return user;
+    }
+
     public void RegisterUser(User user, string password)
     {
         var hashedPassword = _passwordHasher.HashPassword(user, password);
@@ -31,7 +45,7 @@ public class AccountService : IAccountService
 
     public string GenerateJwt(LoginDto dto)
     {
-      var user = _accountRepository.CheckIfExist(dto);
+      var user = _accountRepository.CheckIfAccountExist(dto);
         
       if (user == null)
       {

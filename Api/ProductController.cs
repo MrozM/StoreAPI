@@ -9,6 +9,7 @@ namespace Store;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductController : Controller
 {
     
@@ -21,6 +22,7 @@ public class ProductController : Controller
     }
     
     [HttpGet]
+    [AllowAnonymous]
     public ActionResult<IEnumerable<ProductDto>> GetAll()
     {
         var products = _productService.GetAll();
@@ -29,6 +31,7 @@ public class ProductController : Controller
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public ActionResult<ProductDto> GetById(long id)
     {
         var product = _productService.GetById(id);
@@ -41,7 +44,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult<CreateProductDto> Add(CreateProductDto dto)
     {
         if (dto == null)
@@ -56,7 +59,7 @@ public class ProductController : Controller
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult<Product> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
     { 
         
@@ -66,7 +69,7 @@ public class ProductController : Controller
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult Delete([FromRoute]int id)
     {
         var isDeleted = _productService.Delete(id);
