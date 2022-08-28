@@ -18,9 +18,9 @@ public class ProductRepository : IProductRepository
         return _context.Products.Any(p => p.Id == id);
     }
     
-    public Product? GetById(long id)
+    public Product GetById(long id)
     {
-        var product = _context.Products.First(p => p.Id == id);
+        var product = _context.Products.FirstOrDefault(p => p.Id == id);
 
         return product;
     }

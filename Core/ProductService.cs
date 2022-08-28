@@ -12,7 +12,7 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
     
-    public Product? GetById(long id)
+    public Product GetById(long id)
     {
         var product = _productRepository.GetById(id);
         return product;

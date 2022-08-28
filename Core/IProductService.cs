@@ -5,7 +5,7 @@ namespace Core;
 
 public interface IProductService
 {
-    Product? GetById(long id);
+    Product GetById(long id);
     IEnumerable<Product> GetAll();
     void Add(Product product);
     void Update(long id, Product product);
