@@ -20,7 +20,7 @@ public class ProductRepository : IProductRepository
     
     public Product? GetById(long id)
     {
-        var product = _context.Products.FirstOrDefault(p => p.Id == id);
+        var product = _context.Products.First(p => p.Id == id);
 
         return product;
     }

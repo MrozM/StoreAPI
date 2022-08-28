@@ -1,5 +1,4 @@
 using Core.Models;
-using Infrastructure.Models;
 
 namespace Core;
 
@@ -31,12 +30,10 @@ public class ProductService : IProductService
         _productRepository.Add(product);
     }
 
-    public void Update(long id, UpdateProductDto dto)
+    public void Update(long id, Product product)
     {
-        var product = _productRepository.GetById(id);
-        product.UpdateFromDto(dto);
-
-        _productRepository.Update(product);
+         _productRepository.GetById(id);
+         _productRepository.Update(product);
     }
 
     public bool Delete(long id)

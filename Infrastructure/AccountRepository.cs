@@ -11,23 +11,13 @@ public class AccountRepository : IAccountRepository
     {
         _context = context;
     }
-    public void RegisterUser(User user)
+    public void CreateAccount(User user)
     {
         _context.Users.Add(user);
         _context.SaveChanges();
     }
 
-    public User? CheckIfAccountExist(LoginDto dto)
-    {
-        var user = _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == dto.Email);
-
-        return user;
-    }
-
-    public User? CheckIfMailExist(string mail)
-    {
-        var user = _context.Users.FirstOrDefault(u => u.Email == mail);
-
-        return user;
-    }
+    public User CheckIfAccountExist(LoginDto dto) =>  _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == dto.Email);
+    
+    public bool CheckIfMailExist(string mail) => _context.Users.Any(u => u.Email == mail);
 }

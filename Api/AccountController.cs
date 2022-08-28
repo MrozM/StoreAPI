@@ -18,10 +18,10 @@ public class AccountController : Controller
         _accountService = accountService;
     }
     [HttpPost("register")]
-    public ActionResult RegisterUser([FromBody]RegisterUserDto dto)
+    public ActionResult CreateAccount([FromBody]RegisterUserDto dto)
     {
         var user = _mapper.Map<User>(dto);
-        _accountService.RegisterUser(user, dto.Password);
+        _accountService.CreateAccount(user, dto.Password);
         return Ok();
     }
 

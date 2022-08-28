@@ -36,7 +36,10 @@ public class ProductController : Controller
     {
         var product = _productService.GetById(id);
 
-        if (product is null) return NotFound();
+        if (product is null)
+        {
+            return NotFound();
+        }
 
        var productDto = _mapper.Map<ProductDto>(product);
 
@@ -47,10 +50,6 @@ public class ProductController : Controller
     [Authorize(Roles = "Admin,Manager")]
     public ActionResult<CreateProductDto> Add(CreateProductDto dto)
     {
-        if (dto == null)
-        {
-            return BadRequest();
-        }
 
         var product = _mapper.Map<Product>(dto);
         _productService.Add(product);
@@ -61,9 +60,9 @@ public class ProductController : Controller
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager")]
     public ActionResult<Product> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
-    { 
-        
-        _productService.Update(id, dto);
+    {
+        var product = _mapper.Map<Product>(dto);  
+        _productService.Update(id, product);
 
         return NoContent();
     }

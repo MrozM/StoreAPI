@@ -8,6 +8,6 @@ public interface IProductService
     Product? GetById(long id);
     IEnumerable<Product> GetAll();
     void Add(Product product);
-    void Update(long id, UpdateProductDto product);
+    void Update(long id, Product product);
     bool Delete(long id);
 }

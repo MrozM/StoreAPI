@@ -22,25 +22,24 @@ public class AccountService : IAccountService
         _authenticationSettings = authenticationSettings;
     }
 
-    public User? CheckIfAccountExist(LoginDto dto)
+    public User CheckIfAccountExist(LoginDto dto)
     {
         var user = _accountRepository.CheckIfAccountExist(dto);
 
         return user;
     }
 
-    public User? CheckIfMailExist(string mail)
+    public bool CheckIfMailExist(string mail)
     {
         var user = _accountRepository.CheckIfMailExist(mail);
-
         return user;
     }
 
-    public void RegisterUser(User user, string password)
+    public void CreateAccount(User user, string password)
     {
         var hashedPassword = _passwordHasher.HashPassword(user, password);
         user.PasswordHash = hashedPassword;
-     _accountRepository.RegisterUser(user);
+        _accountRepository.CreateAccount(user);
     }
 
     public string GenerateJwt(LoginDto dto)

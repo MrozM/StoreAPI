@@ -8,7 +8,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
     {
         RuleFor(u => u.Email).NotEmpty().EmailAddress();
 
-        RuleFor(u => u.Password).MinimumLength(6);
+        RuleFor(u => u.Password).NotEmpty().MinimumLength(6);
 
         RuleFor(u => u.ConfirmPassword).Equal(u => u.Password);
 
@@ -16,7 +16,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
         {
            var emailInUse = accountService.CheckIfMailExist(value);
 
-           if (emailInUse != null)
+           if (emailInUse)
            {
                context.AddFailure("That email is taken");
            }
