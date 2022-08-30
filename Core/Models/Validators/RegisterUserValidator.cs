@@ -21,6 +21,5 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
                context.AddFailure("That email is taken");
            }
         });
-
     }
 }
