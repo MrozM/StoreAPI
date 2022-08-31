@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Store;
+using Store.Dtos;
+using Store.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 

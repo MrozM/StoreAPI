@@ -1,11 +1,12 @@
 using AutoMapper;
+using Core.Models;
 using Infrastructure.Models;
 
-namespace Core.Models;
+namespace Store.Dtos.Mapping_Profiles;
 
-public class StoreMappingProfile : Profile
+public class ProductMappingProfile : Profile
 {
-    public StoreMappingProfile()
+    public ProductMappingProfile()
     {
         CreateMap<Product, ProductDto>()
             .ForMember(p => p.Name, c => c.MapFrom(t => t.Name))
@@ -24,9 +25,5 @@ public class StoreMappingProfile : Profile
             .ForMember(p => p.Price, c => c.MapFrom(t => t.Price))
             .ForMember(p => p.Quantity, c => c.MapFrom(t => t.Quantity));
 
-        CreateMap<RegisterUserDto, User>()
-            .ForMember(d => d.Email, s => s.MapFrom(v => v.Email))
-            .ForMember(d => d.Username, s => s.MapFrom(v => v.Username))
-            .ForMember(d => d.RoleId, s => s.MapFrom(v => v.RoleId));
     }
 }

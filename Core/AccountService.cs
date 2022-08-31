@@ -22,11 +22,11 @@ public class AccountService : IAccountService
         _authenticationSettings = authenticationSettings;
     }
 
-    public User CheckIfAccountExist(LoginDto dto)
+    public User CheckIfAccountExist(User user)
     {
-        var user = _accountRepository.CheckIfAccountExist(dto);
+        var account = _accountRepository.CheckIfAccountExist(user);
 
-        return user;
+        return account;
     }
 
     public bool CheckIfMailExist(string mail)
@@ -42,16 +42,16 @@ public class AccountService : IAccountService
         _accountRepository.CreateAccount(user);
     }
 
-    public string GenerateJwt(LoginDto dto)
+    public string GenerateJwt(User user, string userPassword)
     {
-      var user = _accountRepository.CheckIfAccountExist(dto);
+      var account = _accountRepository.CheckIfAccountExist(user);
         
-      if (user == null)
+      if (account == null)
       {
           throw new BadHttpRequestException("Invalid username or password");
       }
 
-      var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+      var result = _passwordHasher.VerifyHashedPassword(account, account.PasswordHash, userPassword);
       if (result == PasswordVerificationResult.Failed)
       {
           throw new BadHttpRequestException("Invalid username or password");
@@ -59,9 +59,9 @@ public class AccountService : IAccountService
 
       var claims = new List<Claim>()
       {
-          new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-          new Claim(ClaimTypes.Name, $"{user.Username}"),
-          new Claim(ClaimTypes.Role, $"{user.Role.Name}")
+          new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
+          new Claim(ClaimTypes.Name, $"{account.Username}"),
+          new Claim(ClaimTypes.Role, $"{account.Role.Name}")
 
       };
 

@@ -1,6 +1,4 @@
 using Core.Models;
-using Infrastructure.Models;
-
 namespace Core;
 
 public interface IProductService

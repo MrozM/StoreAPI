@@ -4,6 +4,7 @@ using Core.Models;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Store.Dtos;
 
 namespace Store;
 

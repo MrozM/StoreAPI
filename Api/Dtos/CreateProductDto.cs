@@ -1,4 +1,4 @@
-namespace Infrastructure.Models;
+namespace Store.Dtos;
 
 public class CreateProductDto
 {

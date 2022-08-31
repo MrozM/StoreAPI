@@ -1,4 +1,4 @@
-namespace Core.Models;
+namespace Store.Dtos;
 
 public class RegisterUserDto
 {

@@ -1,6 +1,8 @@
+using Core;
 using FluentValidation;
+using Store.Dtos;
 
-namespace Core.Models.Validators;
+namespace Store.Validators;
 
 public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
 {

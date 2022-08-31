@@ -17,7 +17,7 @@ public class AccountRepository : IAccountRepository
         _context.SaveChanges();
     }
 
-    public User CheckIfAccountExist(LoginDto dto) =>  _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == dto.Email);
+    public User CheckIfAccountExist(User user) =>  _context.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == user.Email);
     
     public bool CheckIfMailExist(string mail) => _context.Users.Any(u => u.Email == mail);
 }

@@ -1,5 +1,6 @@
 using FluentValidation;
 using Infrastructure.Models;
+using Store.Dtos;
 
 namespace Core.Models.Validators;
 

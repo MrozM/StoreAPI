@@ -2,6 +2,7 @@ using AutoMapper;
 using Core;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.Dtos;
 
 namespace Store;
 
@@ -28,7 +29,9 @@ public class AccountController : Controller
     [HttpPost("login")]
     public ActionResult Login([FromBody]LoginDto dto)
     {
-        string token = _accountService.GenerateJwt(dto);
+        var userPassword = dto.Password;
+        var user = _mapper.Map<User>(dto);
+        string token = _accountService.GenerateJwt(user, userPassword);
         return Ok(token);
     }
 }

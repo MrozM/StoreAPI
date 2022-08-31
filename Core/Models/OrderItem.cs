@@ -1,4 +1,3 @@
-using Infrastructure.Models;
 
 namespace Core.Models;
 
@@ -10,4 +9,3 @@ public class OrderItem
 
     public long ProductId { get; set; }
 }
-
