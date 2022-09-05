@@ -12,41 +12,36 @@ public class ProductRepository : IProductRepository
     {
         _context = storeContext;
     }
-
-    public async Task<Product> GetById(long id) => _context.Products.FirstOrDefault(p => p.Id == id);
-
+    
+    public Task<Product> GetById(long id) => _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+    
     public Product CheckIfExist(long id) => _context.Products.FirstOrDefault(p => p.Id == id);
     
-    
-
-    
-    
     public Task<List<Product>> GetAll() => _context.Products.ToListAsync();
-        
-
     
-    public void Add(Product product)
+    
+    public Task Add(Product product)
     {
         _context.Products.Add(product);
-        _context.SaveChanges();
+        return _context.SaveChangesAsync();
     }
 
-    public void Update(Product product)
+    public Task Update(Product product)
     {
         _context.Products.Update(product);
-        _context.SaveChanges();
+        return _context.SaveChangesAsync();
     }
 
-    public bool Delete(long id)
+    public Task<bool> Delete(long id)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
         
-        if (product is null) return false;
+        if (product is null) return Task.FromResult(false);
 
         _context.Products.Remove(product);
         _context.SaveChanges();
 
-        return true;
+        return Task.FromResult(true);
     }
 
    

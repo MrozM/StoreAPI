@@ -12,36 +12,27 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
     
-    public Task<Product> GetById(long id)
-    {
-        var product =  _productRepository.GetById(id);
-        return product;
-    }
+    public Task<Product> GetById(long id) => _productRepository.GetById(id);
     
-    public Task<List<Product>> GetAll()
-    {
-        var products = _productRepository.GetAll();
+    public Task<List<Product>> GetAll() => _productRepository.GetAll();
 
-        return products;
-    }
-    
-    public void Add(Product product)
+    public Task Add(Product product) => _productRepository.Add(product);
+
+    public Task Update(long id, Product product)
     {
-        _productRepository.Add(product);
+         var productToUpdate = _productRepository.GetById(id);
+         var isDescriptionEmpty = string.IsNullOrEmpty(product.Description);
+         if (!isDescriptionEmpty)
+         {
+             productToUpdate.Result.Description = product.Description;
+         }
+
+         productToUpdate.Result.Price = product.Price;
+         productToUpdate.Result.Quantity = product.Quantity;
+         return _productRepository.Update(productToUpdate.Result);
     }
 
-    public void Update(long id, Product product)
-    {
-         _productRepository.GetById(id);
-         _productRepository.Update(product);
-    }
-
-    public bool Delete(long id)
-    {
-        var product = _productRepository.Delete(id);
-
-        return product;
-    }
+    public Task<bool> Delete(long id) => _productRepository.Delete(id);
 
     public Product CheckIfProductExist(long id) => _productRepository.CheckIfExist(id);
 

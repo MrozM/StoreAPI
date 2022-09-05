@@ -42,37 +42,37 @@ public class ProductController : Controller
             return NotFound();
         }
 
-       var productDto = _mapper.Map<ProductDto>(product);
+        var productDto = _mapper.Map<ProductDto>(product);
 
         return Ok(productDto);
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin,Manager")]
-    public ActionResult<CreateProductDto> Add(CreateProductDto dto)
+    public async  Task<ActionResult<CreateProductDto>> Add(CreateProductDto dto)
     {
 
         var product = _mapper.Map<Product>(dto);
-        _productService.Add(product);
+        await _productService.Add(product);
         
         return Ok(dto.Name);
     }
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin,Manager")]
-    public ActionResult<Product> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
+    public async Task<ActionResult<Product>> Update([FromRoute]long id, [FromBody]UpdateProductDto dto)
     {
         var product = _mapper.Map<Product>(dto);  
-        _productService.Update(id, product);
+        await _productService.Update(id, product);
 
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin,Manager")]
-    public ActionResult Delete([FromRoute]int id)
+    public async Task<ActionResult> Delete([FromRoute]int id)
     {
-        var isDeleted = _productService.Delete(id);
+        var isDeleted = await _productService.Delete(id);
         if (isDeleted) return NoContent();
         
         return NotFound();

@@ -5,7 +5,6 @@ using Core.Models.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
-using Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
