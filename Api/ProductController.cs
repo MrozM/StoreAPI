@@ -24,18 +24,18 @@ public class ProductController : Controller
     
     [HttpGet]
     [AllowAnonymous]
-    public ActionResult<IEnumerable<ProductDto>> GetAll()
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetAll()
     {
-        var products = _productService.GetAll();
+        var products = await _productService.GetAll();
         var productsDtos = _mapper.Map<List<ProductDto>>(products);
         return Ok(productsDtos);
     }
 
     [HttpGet("{id}")]
     [AllowAnonymous]
-    public ActionResult<ProductDto> GetById(long id)
+    public async Task<ActionResult<ProductDto>> GetById(long id)
     {
-        var product = _productService.GetById(id);
+        var product = await _productService.GetById(id);
 
         if (product is null)
         {

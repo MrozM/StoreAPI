@@ -74,12 +74,14 @@ builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
 builder.Services.AddScoped<IValidator<CreateProductDto>, CreateProductValidator>();
 builder.Services.AddScoped<DbSeeder>();
 builder.Services.AddDbContext<StoreContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("StoreAPI")));
+    options.UseSqlServer(builder.Configuration["ConnectionString:StoreAPI"]));
 builder.Services.AddHostedService<NamingCheckService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

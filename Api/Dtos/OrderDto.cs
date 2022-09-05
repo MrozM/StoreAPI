@@ -4,6 +4,6 @@ namespace Store.Dtos;
 
 public class OrderDto
 {
-    public IEnumerable<OrderItem> Items { get; set; }
-    public User User { get; set; }
+    public IEnumerable<OrderItemDto> Items { get; set; }
+    public long UserId { get; set; }
 }

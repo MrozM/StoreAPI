@@ -12,13 +12,13 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
     
-    public Product GetById(long id)
+    public Task<Product> GetById(long id)
     {
-        var product = _productRepository.GetById(id);
+        var product =  _productRepository.GetById(id);
         return product;
     }
     
-    public IEnumerable<Product> GetAll()
+    public Task<List<Product>> GetAll()
     {
         var products = _productRepository.GetAll();
 
@@ -42,4 +42,8 @@ public class ProductService : IProductService
 
         return product;
     }
+
+    public Product CheckIfProductExist(long id) => _productRepository.CheckIfExist(id);
+
+    
 }

@@ -1,5 +1,6 @@
 using Core;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
@@ -12,25 +13,18 @@ public class ProductRepository : IProductRepository
         _context = storeContext;
     }
 
+    public async Task<Product> GetById(long id) => _context.Products.FirstOrDefault(p => p.Id == id);
 
-    public bool CheckIfExist(long id)
-    {
-        return _context.Products.Any(p => p.Id == id);
-    }
+    public Product CheckIfExist(long id) => _context.Products.FirstOrDefault(p => p.Id == id);
     
-    public Product GetById(long id)
-    {
-        var product = _context.Products.FirstOrDefault(p => p.Id == id);
+    
 
-        return product;
-    }
     
-    public IEnumerable<Product> GetAll()
-    {
-        var products = _context.Products.ToList();
+    
+    public Task<List<Product>> GetAll() => _context.Products.ToListAsync();
         
-        return products;
-    }
+
+    
     public void Add(Product product)
     {
         _context.Products.Add(product);

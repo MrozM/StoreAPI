@@ -1,10 +1,7 @@
+namespace Store.Dtos;
 
-namespace Core.Models;
-
-public class OrderItem
+public class OrderItemDto
 {
-    public long Id { get; set; }
     public long ProductId { get; set; }
     public int Quantity { get; set; }
-
 }
