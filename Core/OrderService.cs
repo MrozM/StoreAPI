@@ -13,7 +13,10 @@ public class OrderService : IOrderService
         _orderRepository = orderRepository;
         _productService = productService;
     }
-    public void PostOrder(Order order)
+
+    public Task<List<Order>> GetOrders(long id) => _orderRepository.GetOrders(id);
+
+    public Task PostOrder(Order order)
     {
         
             foreach (var item in order.Items)
@@ -31,6 +34,6 @@ public class OrderService : IOrderService
                 }
             }
             
-            _orderRepository.PostOrder(order);
+            return _orderRepository.PostOrder(order);
     }
 }

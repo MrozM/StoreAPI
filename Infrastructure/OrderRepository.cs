@@ -1,5 +1,6 @@
 using Core;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
@@ -11,9 +12,12 @@ public class OrderRepository : IOrderRepository
     {
         _context = context;
     }
-    public void PostOrder(Order order)
+
+    public Task<List<Order>> GetOrders(long id) => _context.Orders.Include(i => i.Items).Where(u => u.UserId == id).ToListAsync();
+
+    public Task PostOrder(Order order)
     {
         _context.Orders.Add(order);
-        _context.SaveChanges();
+       return _context.SaveChangesAsync();
     }
 }

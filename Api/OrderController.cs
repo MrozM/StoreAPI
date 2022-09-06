@@ -1,7 +1,6 @@
 using AutoMapper;
 using Core;
 using Core.Models;
-using Infrastructure.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.Dtos;
@@ -22,17 +21,17 @@ public class OrderController : Controller
         _orderService = orderService;
     }
     [HttpGet("{userId}")]
-    public ActionResult<IEnumerable<OrderItem>> GetOrder([FromRoute]long userId)
+    public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrders([FromRoute]long userId)
     {
-        //pobieram dane
-        return Ok();
+        var orders = await _orderService.GetOrders(userId);
+        return Ok(orders);
     }
 
     [HttpPost]
-    public ActionResult PostOrder([FromBody]OrderDto orderDto)
+    public async Task<ActionResult> PostOrder([FromBody]OrderDto orderDto)
     {
         var order = _mapper.Map<Order>(orderDto);
-        _orderService.PostOrder(order);
+        await _orderService.PostOrder(order);
         
         return NoContent();
     }

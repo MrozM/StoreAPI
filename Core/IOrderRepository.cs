@@ -4,5 +4,6 @@ namespace Core;
 
 public interface IOrderRepository
 {
-    void PostOrder(Order order);
+    Task<List<Order>> GetOrders(long id);
+    Task PostOrder(Order order);
 }
