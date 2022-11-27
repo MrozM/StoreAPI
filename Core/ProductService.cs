@@ -1,40 +1,49 @@
+using Core.Interfaces;
 using Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Core;
 
 public class ProductService : IProductService 
 {
     private readonly IProductRepository _productRepository;
+    private readonly ILogger<ProductService> _logger;
 
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
+        _logger = logger;
     }
     
-    public Task<Product> GetById(long id) => _productRepository.GetById(id);
-    
-    public Task<List<Product>> GetAll() => _productRepository.GetAll();
+    public async Task<Product> GetById(long id) => await _productRepository.GetById(id);
 
-    public Task Add(Product product) => _productRepository.Add(product);
-
-    public Task Update(long id, Product product)
+    public async Task<List<Product>> GetAll()
     {
-         var productToUpdate = _productRepository.GetById(id);
+        _logger.LogInformation("get all orders method invoked!");
+        
+        return await _productRepository.GetAll();
+        
+    } 
+    public async Task Add(Product product) => await _productRepository.Add(product);
+
+    public async Task<Product> Update(long id, Product product)
+    {
+         var productToUpdate = await _productRepository.GetById(id);
          var isDescriptionEmpty = string.IsNullOrEmpty(product.Description);
          if (!isDescriptionEmpty)
          {
-             productToUpdate.Result.Description = product.Description;
+             productToUpdate.Description = product.Description;
          }
 
-         productToUpdate.Result.Price = product.Price;
-         productToUpdate.Result.Quantity = product.Quantity;
-         return _productRepository.Update(productToUpdate.Result);
+         productToUpdate.Price = product.Price;
+         productToUpdate.Quantity = product.Quantity;
+         return await _productRepository.Update(productToUpdate);
     }
 
-    public Task<bool> Delete(long id) => _productRepository.Delete(id);
+    public async Task<bool> Delete(long id) => await _productRepository.Delete(id);
 
-    public Product CheckIfProductExist(long id) => _productRepository.CheckIfExist(id);
+    public async Task<Product> CheckIfProductExist(long id) => await _productRepository.CheckIfExist(id);
 
     
 }

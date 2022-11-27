@@ -1,6 +1,6 @@
 using Core.Models;
 
-namespace Core;
+namespace Core.Interfaces;
 
 public interface IAccountService
 { 

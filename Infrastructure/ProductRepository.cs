@@ -1,4 +1,5 @@
 using Core;
+using Core.Interfaces;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +14,11 @@ public class ProductRepository : IProductRepository
         _context = storeContext;
     }
     
-    public Task<Product> GetById(long id) => _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+    public async Task<Product> GetById(long id) => await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
     
-    public Product CheckIfExist(long id) => _context.Products.FirstOrDefault(p => p.Id == id);
+    public async Task<Product> CheckIfExist(long id) => await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
     
-    public Task<List<Product>> GetAll() => _context.Products.ToListAsync();
+    public async Task<List<Product>> GetAll() => await _context.Products.ToListAsync();
     
     
     public Task Add(Product product)
@@ -26,22 +27,24 @@ public class ProductRepository : IProductRepository
         return _context.SaveChangesAsync();
     }
 
-    public Task Update(Product product)
+    public async Task<Product> Update(Product product)
     {
         _context.Products.Update(product);
-        return _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+
+        return product;
     }
 
-    public Task<bool> Delete(long id)
+    public async Task<bool> Delete(long id)
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == id);
         
-        if (product is null) return Task.FromResult(false);
+        if (product is null) return false;
 
         _context.Products.Remove(product);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
-        return Task.FromResult(true);
+        return true;
     }
 
    

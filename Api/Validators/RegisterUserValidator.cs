@@ -1,4 +1,5 @@
 using Core;
+using Core.Interfaces;
 using FluentValidation;
 using Store.Dtos;
 

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Core;
+using Core.Interfaces;
 using Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

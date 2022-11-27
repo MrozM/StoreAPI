@@ -1,5 +1,6 @@
 using System.Text;
 using Core;
+using Core.Interfaces;
 using Core.Models;
 using Core.Models.Validators;
 using FluentValidation;
@@ -9,14 +10,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog.Web;
 using Store;
 using Store.Dtos;
 using Store.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.WebHost.UseNLog();
 
+// Add services to the container.
 builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
